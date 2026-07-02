@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dr. Ivan Kanchev — 6 design directions · Phase 1</title>
+<meta name="description" content="Compare six completely different design directions for the site of Dr. Ivan Kanchev's dental practice, Plovdiv. Identical real content, different design.">
+<link rel="icon" href="data:,">
+<link rel="alternate" hreflang="bg" href="index.html">
+<link rel="alternate" hreflang="en" href="index.en.html">
+<link rel="alternate" hreflang="x-default" href="index.html">
+<style>
+/* Neutral gallery shell — deliberately plain so it doesn't bias the comparison. */
+:root{
+  --bg:#F5F5F4; --card:#FFFFFF; --ink:#1A1A18; --text:#52524E; --line:#E3E3DF;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --serif:Georgia,"Times New Roman",serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 var(--sans)}
+.wrap{max-width:1160px;margin:0 auto;padding:0 20px}
+a{color:inherit}
+a:focus-visible,button:focus-visible{outline:2px solid #1A1A18;outline-offset:3px;border-radius:2px}
+
+.langbar{display:flex;justify-content:flex-end;padding:16px 0 0}
+.lang-switch{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;font:600 12.5px/1 var(--sans);background:var(--card)}
+.lang-switch a,.lang-switch span{padding:8px 13px;text-decoration:none;color:var(--text)}
+.lang-switch [aria-current="true"]{background:var(--ink);color:#fff}
+.lang-switch a:hover{background:var(--bg)}
+header.site{padding:20px 0 8px}
+.kicker{font:600 12px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--text)}
+h1{font:700 clamp(1.7rem,4vw,2.5rem)/1.2 var(--sans);margin:12px 0 10px;letter-spacing:-.01em}
+.intro{max-width:74ch;color:var(--text);margin:0 0 20px}
+.notes{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px 22px;margin:8px 0 14px;font-size:14.5px;color:var(--text)}
+.notes ul{margin:6px 0 0;padding-left:18px}
+.notes li{margin:4px 0}
+.notes strong{color:var(--ink)}
+.phase2{font-size:14.5px;color:var(--text);max-width:80ch;margin:0 0 34px}
+.phase2 code{font:500 13px var(--mono);background:var(--card);border:1px solid var(--line);border-radius:5px;padding:2px 7px;color:var(--ink)}
+
+.grid{display:grid;grid-template-columns:1fr;gap:26px;padding-bottom:24px}
+@media(min-width:720px){.grid{grid-template-columns:1fr 1fr}}
+@media(min-width:1080px){.grid{grid-template-columns:1fr 1fr 1fr}}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;transition:box-shadow .15s ease,transform .15s ease}
+.card:hover{box-shadow:0 12px 32px rgba(20,20,18,.10);transform:translateY(-2px)}
+.card-body{padding:18px 20px 20px;display:flex;flex-direction:column;gap:8px;flex:1}
+.card h2{font:700 19px/1.25 var(--sans);margin:0}
+.card h2 .bgname{font-weight:500;color:var(--text)}
+.mood{font:600 11px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--text)}
+.why{margin:0;font-size:14.5px;color:var(--text);flex:1}
+.meta{display:flex;align-items:center;gap:10px;font:500 12.5px var(--sans);color:var(--text);flex-wrap:wrap}
+.dots{display:inline-flex;gap:5px}
+.dot{width:13px;height:13px;border-radius:50%;border:1px solid rgba(0,0,0,.14)}
+.open{display:inline-block;margin-top:6px;font:600 14.5px var(--sans);color:var(--ink);text-decoration:none;border:1px solid var(--ink);border-radius:8px;padding:10px 16px;text-align:center}
+.open:hover{background:var(--ink);color:#fff}
+
+/* ---- mini previews (decorative approximations; real pages load their own web fonts) ---- */
+.prev{aspect-ratio:16/10;padding:16px 18px;display:flex;flex-direction:column;gap:9px;border-bottom:1px solid var(--line);position:relative;overflow:hidden}
+.chrome{display:flex;gap:5px;margin-bottom:2px}
+.chrome i{width:8px;height:8px;border-radius:50%;background:rgba(0,0,0,.14)}
+.p-eyebrow{font:600 9px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase}
+.p-h{font-weight:700;line-height:1.15;letter-spacing:-.01em}
+.p-sub{font-size:10px;line-height:1.45;opacity:.75;max-width:34ch}
+.p-cta{display:flex;gap:7px;align-items:center;margin-top:auto}
+.p-btn{font:700 10px/1 var(--sans);padding:8px 12px;border-radius:6px}
+.p-row{display:flex;gap:7px}
+
+/* 01 Protocol — white / azure / hairlines */
+.p1{background:#FFFFFF;color:#0F1C28}
+.p1 .p-eyebrow{color:#0E6BA8}
+.p1 .p-h{font:700 20px/1.15 var(--sans)}
+.p1 .p-btn{background:#0E6BA8;color:#fff;border-radius:3px}
+.p1 .p-btn.ghost{background:none;color:#0F1C28;border:1px solid #0F1C28}
+.p1 .p-row{border-top:1px solid #DCE5EC;padding-top:8px}
+.p1 .p-row span{font:600 9px/1.4 var(--sans);color:#40525E;border-left:1px solid #DCE5EC;padding-left:8px}
+.p1 .p-row span:first-child{border-left:0;padding-left:0}
+.p1 .p-row b{display:block;font:800 13px var(--sans);color:#0F1C28}
+
+/* 02 Porchlight — cream / clay / pills */
+.p2{background:#FFF7EE;color:#33241A}
+.p2 .p-eyebrow{color:#B04A24}
+.p2 .p-h{font:700 20px/1.2 var(--serif)}
+.p2 .p-h em{font-style:italic;text-decoration:underline wavy #B04A24 1.5px;text-underline-offset:4px}
+.p2 .p-btn{background:#B04A24;color:#fff;border-radius:999px}
+.p2 .p-btn.ghost{background:#fff;color:#B04A24;border:2px solid #B04A24;border-radius:999px}
+.p2 .p-row span{font:700 8.5px/1 var(--sans);background:#F6C877;color:#33241A;border-radius:999px;padding:5px 9px}
+.p2 .p-row span.sage{background:#DDE7DA;color:#3E5738}
+
+/* 03 Atelier — ivory / ink / bronze */
+.p3{background:#F7F4EC;color:#191610}
+.p3 .p-eyebrow{color:#75623A;letter-spacing:.24em}
+.p3 .p-h{font:600 21px/1.15 var(--serif)}
+.p3 .p-h em{font-style:italic}
+.p3 .p-btn{background:none;color:#191610;border:1px solid #191610;border-radius:0;letter-spacing:.14em;font-weight:600;font-size:8.5px;text-transform:uppercase}
+.p3 .p-row{flex-direction:column;gap:4px}
+.p3 .p-row span{font:500 9.5px/1.5 var(--serif);border-bottom:1px solid #CBB98F;padding-bottom:4px;display:flex;gap:8px}
+.p3 .p-row span i{font-style:normal;color:#75623A}
+
+/* 04 Milk Tooth — paper / cobalt / sun / stickers */
+.p4{background:#FFFDF4;color:#14131A}
+.p4 .p-h{font:900 19px/1.1 var(--sans);text-transform:uppercase;letter-spacing:-.01em}
+.p4 .p-h mark{background:#FF5D8F;color:#14131A;padding:0 4px;transform:skew(-4deg);display:inline-block}
+.p4 .sticker{position:absolute;top:14px;right:-6px;transform:rotate(6deg);font:800 8px/1 var(--sans);letter-spacing:.06em;background:#35C4B5;color:#14131A;border:2.5px solid #14131A;border-radius:999px;padding:6px 10px;box-shadow:3px 3px 0 #14131A}
+.p4 .p-btn{background:#FFC700;color:#14131A;border:2.5px solid #14131A;border-radius:10px;box-shadow:3px 3px 0 #14131A}
+.p4 .p-btn.ghost{background:#fff;box-shadow:3px 3px 0 #14131A}
+.p4 .p-row span{font:800 8px/1 var(--sans);background:#2038E8;color:#fff;border:2px solid #14131A;border-radius:6px;padding:5px 8px;transform:rotate(-1.2deg)}
+.p4 .p-row span:nth-child(2){background:#fff;color:#14131A;transform:rotate(1.2deg)}
+
+/* 05 Broadsheet — paper / ink / vermilion index */
+.p5{background:#FAFAF6;color:#161616;border-top:3px solid #161616}
+.p5 .p-eyebrow{color:#63635E;border-bottom:1px solid #DEDED6;padding-bottom:6px}
+.p5 .p-h{font:600 20px/1.15 var(--serif)}
+.p5 .p-sub{font-family:var(--serif)}
+.p5 .p-row{flex-direction:column;gap:4px;margin-top:auto}
+.p5 .p-row span{font:500 9.5px/1.5 var(--serif);border-top:1px solid #DEDED6;padding-top:4px;display:flex;gap:8px}
+.p5 .p-row span i{font-style:normal;color:#C0361B;font-family:var(--sans);font-weight:700}
+.p5 .p-cta{display:none}
+
+/* 06 Instrument — warm dark / amber / mono */
+.p6{background:#161310;color:#EFE8DC}
+.p6::after{content:"";position:absolute;right:-30px;top:-30px;width:120px;height:120px;border:1px solid rgba(217,164,65,.35);border-radius:50%;pointer-events:none}
+.p6 .p-eyebrow{font-family:var(--mono);color:#D9A441;letter-spacing:.14em}
+.p6 .p-h{font:700 19px/1.2 var(--sans)}
+.p6 .p-h em{font-style:normal;color:#D9A441}
+.p6 .p-sub{color:#AC9F8D;opacity:1}
+.p6 .p-btn{background:#D9A441;color:#161310;border-radius:7px}
+.p6 .p-btn.ghost{background:none;color:#EFE8DC;border:1px solid #352D24}
+.p6 .p-row span{font:500 8.5px/1 var(--mono);letter-spacing:.08em;color:#AC9F8D;border:1px solid #352D24;border-radius:5px;padding:5px 8px}
+
+footer.site{border-top:1px solid var(--line);margin-top:16px;padding:26px 0 48px;font-size:13.5px;color:var(--text)}
+footer.site .wrap{display:flex;flex-direction:column;gap:6px}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <nav class="langbar" aria-label="Език / Language">
+    <span class="lang-switch">
+      <a href="index.html" hreflang="bg" lang="bg" aria-label="Смени на български">БГ</a>
+      <span aria-current="true" lang="en">EN</span>
+    </span>
+  </nav>
+</div>
+
+<header class="site">
+  <div class="wrap">
+    <p class="kicker">Phase 1 · Design exploration · 2026-07-02</p>
+    <h1>Dr. Ivan Kanchev — six design directions</h1>
+    <p class="intro">Six completely different design languages for the practice's site, each a small four-page site (Home · Services · About · Contact). The content is <strong>identical and real</strong> across all six — services, reviews (5.0 from 356, SuperDoc), credentials, NHIF, contacts — so you're comparing pure design, not different copy.</p>
+    <div class="notes">
+      <strong>Before you browse:</strong>
+      <ul>
+        <li>The content is extracted from the current site (<code>clinics/kanchev-dental</code>). Real photos of the practice are used where the direction calls for photography.</li>
+        <li><strong>The address, 70 Maria Luiza Blvd, is temporary</strong> (the permanent office is under renovation) — it's flagged in the code with <code>PLACEHOLDER</code> comments, along with the photo slot for Dr. Kanchev and the map.</li>
+        <li>The forms are demonstrations — they don't send requests. Phase 2 wires them to Web3Forms just like the live site.</li>
+        <li>The current site is light teal glassmorphism, and the repo also holds three older dark drafts — these six directions deliberately repeat none of them.</li>
+      </ul>
+    </div>
+    <p class="phase2"><strong>How to pick a winner:</strong> open a direction, look through its four pages (and on mobile — shrink the window), then come back here and compare the next one. When you choose, reply in the session with the folder name, e.g. <code>port 02-warm-family into the real site</code> — the chosen system is ported into the real stack and can be rolled out across the other sites.</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="grid">
+
+    <article class="card">
+      <div class="prev p1" aria-hidden="true">
+        <div class="chrome"><i></i><i></i><i></i></div>
+        <span class="p-eyebrow">01 — Dental medicine</span>
+        <span class="p-h">Healthy teeth and peace of mind</span>
+        <span class="p-sub">Precision, order and air. Paper-white ground, azure accent, fine rules.</span>
+        <div class="p-cta"><span class="p-btn">Book</span><span class="p-btn ghost">Call</span></div>
+        <div class="p-row"><span><b>10+</b>years</span><span><b>5.0</b>rating</span><span><b>NHIF</b>insurance</span></div>
+      </div>
+      <div class="card-body">
+        <h2>01 · Protocol <span class="bgname">— modern-clinical</span></h2>
+        <p class="mood">Precise · orderly · calm</p>
+        <p class="why">White precision, rules and numbers — the clinic that runs on time. For busy professionals who choose by signals of competence.</p>
+        <p class="meta">Manrope + Inter <span class="dots"><i class="dot" style="background:#FFFFFF"></i><i class="dot" style="background:#0E6BA8"></i><i class="dot" style="background:#0F1C28"></i><i class="dot" style="background:#F2F6FA"></i></span></p>
+        <a class="open" href="01-modern-clinical/index.en.html">Explore this direction →</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="prev p2" aria-hidden="true">
+        <div class="chrome"><i></i><i></i><i></i></div>
+        <span class="p-eyebrow">Dental medicine · a new generation</span>
+        <span class="p-h">Healthy teeth and <em>peace of mind</em></span>
+        <span class="p-sub">Warm cream, soft shapes, waves and a human tone — for the whole family.</span>
+        <div class="p-cta"><span class="p-btn">Book</span><span class="p-btn ghost">Call</span></div>
+        <div class="p-row"><span>Children welcome</span><span class="sage">NHIF</span><span class="sage">BG / EN</span></div>
+      </div>
+      <div class="card-body">
+        <h2>02 · Porchlight <span class="bgname">— warm-family</span></h2>
+        <p class="mood">Soft · human · sunlit</p>
+        <p class="why">The whole-family practice: serif warmth, rounded cards, and "It didn't feel like being at the dentist" as the central proof.</p>
+        <p class="meta">Vollkorn + Nunito <span class="dots"><i class="dot" style="background:#FFF7EE"></i><i class="dot" style="background:#B04A24"></i><i class="dot" style="background:#5F7D58"></i><i class="dot" style="background:#F6C877"></i></span></p>
+        <a class="open" href="02-warm-family/index.en.html">Explore this direction →</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="prev p3" aria-hidden="true">
+        <div class="chrome"><i></i><i></i><i></i></div>
+        <span class="p-eyebrow">Dental medicine</span>
+        <span class="p-h">Healthy teeth and <em>peace of mind</em>, with care from a professional</span>
+        <div class="p-row">
+          <span><i>I.</i> Cosmetic dentistry</span>
+          <span><i>II.</i> Crowns &amp; prosthetics</span>
+        </div>
+        <div class="p-cta"><span class="p-btn">Book</span></div>
+      </div>
+      <div class="card-body">
+        <h2>03 · Atelier <span class="bgname">— quiet-luxury cosmetic</span></h2>
+        <p class="mood">Editorial · ivory · bronze</p>
+        <p class="why">Quiet luxury for high-end cosmetic dentistry and prosthetics — the direction that monetises the University of Siena specialisation.</p>
+        <p class="meta">Cormorant Garamond + Montserrat <span class="dots"><i class="dot" style="background:#F7F4EC"></i><i class="dot" style="background:#191610"></i><i class="dot" style="background:#CBB98F"></i></span></p>
+        <a class="open" href="03-luxury-cosmetic/index.en.html">Explore this direction →</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="prev p4" aria-hidden="true">
+        <div class="chrome"><i></i><i></i><i></i></div>
+        <span class="sticker">Children welcome ★</span>
+        <span class="p-h">Healthy teeth and <mark>peace of mind</mark></span>
+        <span class="p-sub">Poster energy: bold outlines, hard shadows, stickers — no fear.</span>
+        <div class="p-cta"><span class="p-btn">Book</span><span class="p-btn ghost">Call</span></div>
+        <div class="p-row"><span>5.0 ★ 356 ratings</span><span>NHIF</span></div>
+      </div>
+      <div class="card-body">
+        <h2>04 · Milk Tooth <span class="bgname">— bold-playful</span></h2>
+        <p class="mood">Poster · colourful · fearless</p>
+        <p class="why">The direction a cautious agency would never pitch: loud, joyful, anti-fear — for young families and anyone who puts off the dentist.</p>
+        <p class="meta">Unbounded + Rubik <span class="dots"><i class="dot" style="background:#FFFDF4"></i><i class="dot" style="background:#2038E8"></i><i class="dot" style="background:#FFC700"></i><i class="dot" style="background:#FF5D8F"></i></span></p>
+        <a class="open" href="04-bold-playful/index.en.html">Explore this direction →</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="prev p5" aria-hidden="true">
+        <div class="chrome"><i></i><i></i><i></i></div>
+        <span class="p-eyebrow">Dr. Ivan Kanchev · Plovdiv</span>
+        <span class="p-h">Healthy teeth and peace of mind, with care from a professional</span>
+        <div class="p-row">
+          <span><i>01</i> Root canal treatment — under the microscope</span>
+          <span><i>02</i> Prevention &amp; check-up</span>
+          <span><i>03</i> Cosmetic dentistry</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <h2>05 · Broadsheet <span class="bgname">— editorial-minimal</span></h2>
+        <p class="mood">Typographic · monochrome · honest</p>
+        <p class="why">Clean typography like a good newspaper — candour instead of a brochure. Not a single photo: the content carries all the authority.</p>
+        <p class="meta">Literata + Inter <span class="dots"><i class="dot" style="background:#FAFAF6"></i><i class="dot" style="background:#161616"></i><i class="dot" style="background:#C0361B"></i></span></p>
+        <a class="open" href="05-editorial-minimal/index.en.html">Explore this direction →</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="prev p6" aria-hidden="true">
+        <div class="chrome"><i></i><i></i><i></i></div>
+        <span class="p-eyebrow">● Accepting new patients</span>
+        <span class="p-h">Healthy teeth and <em>peace of mind</em></span>
+        <span class="p-sub">Warm-dark like a precision optical instrument — the microscope as identity.</span>
+        <div class="p-cta"><span class="p-btn">Book</span><span class="p-btn ghost">Call</span></div>
+        <div class="p-row"><span>[EXPERIENCE] 10+ yrs</span><span>[RATING] 5.0/356</span></div>
+      </div>
+      <div class="card-body">
+        <h2>06 · Instrument <span class="bgname">— dark precision</span></h2>
+        <p class="mood">Dark · brass · instrumental</p>
+        <p class="why">The dark option — but warm (espresso + brass), deliberately opposite to the old cool-teal drafts. Built around the real edge: treatment under the microscope.</p>
+        <p class="meta">Golos Text + JetBrains Mono <span class="dots"><i class="dot" style="background:#161310"></i><i class="dot" style="background:#D9A441"></i><i class="dot" style="background:#EFE8DC"></i></span></p>
+        <a class="open" href="06-dark-instrument/index.en.html">Explore this direction →</a>
+      </div>
+    </article>
+
+  </div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span><strong>Phase 2:</strong> reply with the winning folder (e.g. <code>port 04-bold-playful into the real site</code>) — its design system (tokens + components in styles.css) is ported into the real stack: the build.py template and the flagship repo, with all the required elements (Web3Forms, GDPR consent, schema.org, OG card).</span>
+    <span>Phase 1 exploration · every file is static — open it directly in a browser, no server and no build step.</span>
+  </div>
+</footer>
+
+</body>
+</html>

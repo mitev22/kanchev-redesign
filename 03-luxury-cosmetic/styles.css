@@ -1,0 +1,1561 @@
+/* ==========================================================================
+   03 — ATELIER · тиха лукс естетика
+   Дентална практика д-р Иван Кънчев · Пловдив
+   Ivory ground · bronze hairlines · Cormorant Garamond display · radius 0
+   Raw hex values live ONLY in this :root block.
+   ========================================================================== */
+
+:root {
+  /* palette ------------------------------------------------------------- */
+  --color-ivory: #F7F4EC;
+  --color-porcelain: #FDFCF9;
+  --color-ink: #191610;
+  --color-text: #55503F;
+  --color-bronze-text: #75623A;
+  --color-bronze-line: #CBB98F;
+  --color-line: #E6E0D2;
+
+  /* semantic aliases (no raw hex below this block) ----------------------- */
+  --ivory: var(--color-ivory);
+  --porcelain: var(--color-porcelain);
+  --ink: var(--color-ink);
+  --text: var(--color-text);
+  --bronze-text: var(--color-bronze-text);
+  --bronze-line: var(--color-bronze-line);
+  --line: var(--color-line);
+
+  /* type ------------------------------------------------------------------ */
+  --font-display: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --font-body: 'Montserrat', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-size-body: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem);
+  --font-size-h1: clamp(2.5rem, 6vw, 4.4rem);
+  --font-size-h2: clamp(1.85rem, 4vw, 2.9rem);
+  --font-size-h3: clamp(1.3rem, 2.4vw, 1.65rem);
+  --font-size-quote: clamp(1.3rem, 2.2vw, 1.65rem);
+  --font-size-label: 0.6875rem;   /* 11px — bronze labels, letterspaced only */
+
+  /* space ------------------------------------------------------------------ */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2.5rem;
+  --space-6: 4rem;
+  --space-7: 6rem;
+  --space-section: clamp(4.5rem, 9vw, 9rem);
+  --space-gutter: clamp(1.25rem, 5vw, 2.5rem);
+
+  /* shape — the atelier has no curves and no shadows ----------------------- */
+  --radius-none: 0;
+  --shadow-none: none;
+  --hairline: 1px;
+  --frame-offset: 6px;
+
+  /* motion — nearly none ---------------------------------------------------- */
+  --dur: 350ms;
+  --dur-slow: 400ms;
+  --ease: cubic-bezier(0.33, 0.01, 0.2, 1);
+
+  /* layout ------------------------------------------------------------------ */
+  --container: 1140px;
+  --measure: 62ch;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: var(--space-5);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+body {
+  margin: 0;
+  background: var(--ivory);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  font-weight: 400;
+  line-height: 1.75;
+  overflow-wrap: break-word;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.08;
+  margin: 0 0 var(--space-4);
+  letter-spacing: 0.005em;
+  overflow-wrap: normal;   /* никога не чупи дума по средата в заглавие */
+}
+
+h1 { font-size: var(--font-size-h1); }
+h2 { font-size: var(--font-size-h2); }
+h3 { font-size: var(--font-size-h3); }
+
+h1 em, h2 em {
+  font-style: italic;
+  font-weight: 500;
+}
+
+p { margin: 0 0 var(--space-3); }
+p:last-child { margin-bottom: 0; }
+
+ul, ol { margin: 0; padding: 0; }
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+svg.icon {
+  width: 1.05em;
+  height: 1.05em;
+  flex: none;
+}
+
+::selection {
+  background: var(--bronze-line);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+/* ==========================================================================
+   Utilities
+   ========================================================================== */
+
+.container {
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--space-gutter);
+}
+
+.u-eyebrow {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--font-size-label);
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--bronze-text);
+  margin: 0 0 var(--space-4);
+}
+
+.u-smallcaps {
+  font-family: var(--font-body);
+  font-size: var(--font-size-label);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--bronze-text);
+}
+
+.lead {
+  font-weight: 300;
+  font-size: clamp(1.0625rem, 1rem + 0.4vw, 1.25rem);
+  line-height: 1.8;
+  max-width: var(--measure);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: var(--space-2);
+  left: var(--space-2);
+  z-index: 100;
+  padding: 0.85rem 1.25rem;
+  background: var(--ink);
+  color: var(--ivory);
+  font-size: 0.8125rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transform: translateY(-300%);
+}
+
+.skip-link:focus-visible {
+  transform: none;
+  outline-color: var(--bronze-line);
+}
+
+/* Text links — persistent hairline underline, slow ink on hover */
+.text-link {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: var(--hairline) solid var(--bronze-line);
+  padding-bottom: 0.1em;
+  transition: border-color var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+
+.text-link:hover { border-bottom-color: var(--ink); }
+
+/* Telephone link — small caps with handset glyph */
+.tel-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65em;
+  min-height: 44px;
+  white-space: nowrap;
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  background: linear-gradient(currentColor, currentColor) no-repeat left calc(100% - 0.35em) / 0 var(--hairline);
+  transition: background-size var(--dur-slow) var(--ease);
+}
+
+.tel-link:hover { background-size: 100% var(--hairline); }
+.tel-link .icon { color: var(--bronze-text); }
+
+/* ==========================================================================
+   Buttons — ghost is the house style
+   ========================================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;
+  min-height: 44px;
+  padding: 0.9rem 2.1rem;
+  border: var(--hairline) solid var(--ink);
+  border-radius: var(--radius-none);
+  box-shadow: var(--shadow-none);
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+
+.btn:hover {
+  background: var(--ink);
+  color: var(--ivory);
+}
+
+.btn--solid {
+  background: var(--ink);
+  color: var(--ivory);
+}
+
+.btn--solid:hover {
+  background: transparent;
+  color: var(--ink);
+}
+
+.btn--small { padding: 0.65rem 1.5rem; }
+
+/* ==========================================================================
+   Header
+   ========================================================================== */
+
+.site-header {
+  position: relative;
+  background: var(--ivory);
+  border-bottom: var(--hairline) solid var(--line);
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  min-height: 4.75rem;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  text-decoration: none;
+  color: var(--ink);
+  min-height: 44px;
+}
+
+.brand__monogram {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  border: var(--hairline) solid var(--bronze-line);
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--bronze-text);
+}
+
+.brand__name {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.site-nav__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.site-nav__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  background: linear-gradient(var(--bronze-text), var(--bronze-text)) no-repeat left calc(100% - 0.6em) / 0 var(--hairline);
+  transition: background-size var(--dur-slow) var(--ease), color var(--dur) var(--ease);
+}
+
+.site-nav__link:hover { background-size: 100% var(--hairline); }
+
+.site-nav__link[aria-current="page"] {
+  color: var(--bronze-text);
+  background-size: 100% var(--hairline);
+}
+
+.site-header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.site-header__tel, .site-header__book { display: none; }
+
+/* Language switch — hairline-boxed BG / EN pair, always visible (even at 360px) */
+.lang-switch {
+  display: inline-flex;
+  align-items: stretch;
+  flex: none;
+  border: var(--hairline) solid var(--bronze-line);
+  border-radius: var(--radius-none);
+}
+
+.lang-switch__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.25rem;
+  min-height: 44px;
+  padding: 0 var(--space-2);
+  color: var(--ink);
+  text-decoration: none;
+  font-family: var(--font-body);
+  font-size: var(--font-size-label);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+
+.lang-switch__link + .lang-switch__link {
+  border-left: var(--hairline) solid var(--bronze-line);
+}
+
+.lang-switch__link:hover {
+  background: var(--ink);
+  color: var(--ivory);
+}
+
+.lang-switch__link[aria-current="true"] {
+  background: var(--ink);
+  color: var(--ivory);
+}
+
+.lang-switch__link[aria-current="true"]:hover {
+  color: var(--ivory);
+}
+
+/* Hamburger — two hairlines */
+.nav-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 var(--space-2);
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--font-size-label);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.nav-toggle svg { width: 22px; height: 22px; }
+
+.nav-toggle__line {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform var(--dur) var(--ease);
+}
+
+body.nav-open .nav-toggle__line--1 { transform: translateY(3px) rotate(45deg); }
+body.nav-open .nav-toggle__line--2 { transform: translateY(-3px) rotate(-45deg); }
+
+/* Mobile / tablet nav panel */
+@media (max-width: 1023.98px) {
+  .site-nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 40;
+    background: var(--porcelain);
+    border-bottom: var(--hairline) solid var(--bronze-line);
+    padding: var(--space-4) var(--space-gutter) var(--space-5);
+  }
+
+  body.nav-open .site-nav { display: block; }
+
+  .site-nav__list li + li { border-top: var(--hairline) solid var(--line); }
+
+  .site-nav__link {
+    width: 100%;
+    min-height: 52px;
+    font-size: 0.8125rem;
+  }
+
+  .site-nav__extra {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+    margin-top: var(--space-4);
+    padding-top: var(--space-4);
+    border-top: var(--hairline) solid var(--bronze-line);
+  }
+}
+
+@media (min-width: 720px) {
+  .site-header__tel { display: inline-flex; }
+  .site-header__book { display: inline-flex; }
+}
+
+/* Таблет: компактен хедер, за да се съберат телефон + CTA + меню */
+@media (min-width: 720px) and (max-width: 1023.98px) {
+  .site-header__inner { gap: var(--space-3); }
+  .brand__name { font-size: 1.2rem; }
+  .site-header__actions { gap: var(--space-3); }
+  .site-header__tel { font-size: 0.75rem; }
+  .site-header__book { padding: 0.55rem 1.1rem; letter-spacing: 0.16em; }
+
+  /* скрий текста „Меню" визуално, но го запази за екранни четци */
+  .nav-toggle__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+}
+
+@media (min-width: 1024px) {
+  .nav-toggle { display: none; }
+  .site-nav__extra { display: none; }
+
+  .site-nav__list {
+    flex-direction: row;
+    gap: var(--space-5);
+  }
+}
+
+/* ==========================================================================
+   Sections & editorial grid
+   ========================================================================== */
+
+.section { padding-block: var(--space-section); }
+
+.section + .section,
+.stats + .section,
+.page-hero + .section { padding-top: 0; }
+
+.section-head {
+  margin-bottom: clamp(2.5rem, 6vw, 4.5rem);
+}
+
+.section-head__lead {
+  max-width: 48ch;
+  font-weight: 300;
+  font-size: clamp(1rem, 0.95rem + 0.35vw, 1.15rem);
+}
+
+@media (min-width: 1024px) {
+  .section-head {
+    display: grid;
+    grid-template-columns: 7fr 5fr;
+    gap: var(--space-6);
+    align-items: end;
+  }
+
+  .section-head__lead {
+    margin-bottom: 0.4rem;      /* optical offset — lead hangs lower right */
+    justify-self: end;
+  }
+
+  .section-head h2 { margin-bottom: 0; }
+}
+
+/* ==========================================================================
+   Hero (Начало)
+   ========================================================================== */
+
+.hero { padding-block: var(--space-section); }
+
+.hero__inner {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.hero__title { max-width: 16ch; }
+
+@media (max-width: 719.98px) {
+  .hero__title { max-width: none; }
+}
+
+.hero__lead {
+  font-weight: 300;
+  font-size: clamp(1.0625rem, 1rem + 0.4vw, 1.2rem);
+  max-width: 52ch;
+  margin-bottom: var(--space-5);
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4) var(--space-5);
+  margin-bottom: var(--space-5);
+}
+
+.hero__rating {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75em;
+  margin-bottom: var(--space-2);
+  color: var(--ink);
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+}
+
+.hero__rating .icon { color: var(--bronze-text); }
+
+.hero__rating-src {
+  font-size: var(--font-size-label);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--bronze-text);
+}
+
+.hero__credential {
+  display: block;
+  max-width: 40ch;
+  line-height: 2;
+}
+
+@media (min-width: 1024px) {
+  .hero__inner {
+    grid-template-columns: 7fr 5fr;
+    gap: clamp(3rem, 6vw, 5.5rem);
+    align-items: start;
+  }
+
+  .hero__media { margin-top: var(--space-6); }  /* asymmetric drop */
+
+  .hero__media img {
+    aspect-ratio: 4 / 5;        /* по-висок редакционен кадър в дясната колона */
+    object-fit: cover;
+  }
+}
+
+/* ==========================================================================
+   Double-border frames — the atelier signature
+   ========================================================================== */
+
+.frame {
+  border: var(--hairline) solid var(--bronze-line);
+  outline: var(--hairline) solid var(--bronze-line);
+  outline-offset: var(--frame-offset);
+  border-radius: var(--radius-none);
+  box-shadow: var(--shadow-none);
+  /* keep the offset outline inside the layout box of parents */
+  margin: calc(var(--frame-offset) + 2px);
+}
+
+.photo-frame { margin: 0; }
+
+.photo-frame .frame { margin-bottom: var(--space-3); }
+
+.photo-frame img { width: 100%; }
+
+.photo-frame__caption {
+  font-size: var(--font-size-label);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--bronze-text);
+  margin: 0 calc(var(--frame-offset) + 2px);
+}
+
+/* Framed ivory placeholder (портрет, карта) */
+.placeholder-frame {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  min-height: 20rem;
+  padding: var(--space-5);
+  background: var(--porcelain);
+  text-align: center;
+}
+
+.placeholder-frame__mark {
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  font-weight: 500;
+  font-style: italic;
+  color: var(--bronze-line);
+  line-height: 1;
+}
+
+.placeholder-frame__label {
+  font-size: var(--font-size-label);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--bronze-text);
+}
+
+/* ==========================================================================
+   Stats — understated figures between hairlines
+   ========================================================================== */
+
+.stats { padding-block: 0 var(--space-section); }
+
+.stats__list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-top: var(--hairline) solid var(--line);
+  border-bottom: var(--hairline) solid var(--line);
+}
+
+.stat {
+  padding: var(--space-5) var(--space-4);
+}
+
+.stat:nth-child(even) { border-left: var(--hairline) solid var(--line); }
+.stat:nth-child(n+3) { border-top: var(--hairline) solid var(--line); }
+
+.stat__value {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(2.1rem, 4.5vw, 3.1rem);
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.1;
+  margin-bottom: var(--space-2);
+}
+
+.stat__label {
+  display: block;
+  font-size: var(--font-size-label);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--bronze-text);
+  line-height: 1.9;
+}
+
+@media (min-width: 720px) {
+  .stats__list { grid-template-columns: repeat(4, 1fr); }
+  .stat { border-left: var(--hairline) solid var(--line); }
+  .stat:first-child { border-left: 0; }
+  .stat:nth-child(n+3) { border-top: 0; }
+}
+
+/* ==========================================================================
+   Услугите като номерирано меню — I. до VI.
+   ========================================================================== */
+
+.menu {
+  list-style: none;
+  border-top: var(--hairline) solid var(--line);
+}
+
+.menu-row {
+  border-bottom: var(--hairline) solid var(--line);
+}
+
+.menu-row__inner {
+  display: grid;
+  grid-template-columns: 3.25rem 1fr;
+  gap: var(--space-2) var(--space-3);
+  padding: var(--space-5) 0;
+}
+
+.menu-row__numeral {
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  font-weight: 500;
+  font-style: italic;
+  color: var(--bronze-text);
+  line-height: 1.3;
+}
+
+.menu-row__name {
+  font-family: var(--font-display);
+  font-size: var(--font-size-h3);
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.menu-row__note {
+  display: inline-block;
+  vertical-align: 0.35em;
+  margin-left: 0.9em;
+  padding: 0.25em 0.7em;
+  border: var(--hairline) solid var(--bronze-line);
+  font-family: var(--font-body);
+  font-size: var(--font-size-label);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--bronze-text);
+  white-space: nowrap;
+}
+
+.menu-row__desc {
+  grid-column: 2;
+  max-width: 56ch;
+  margin: 0;
+}
+
+@media (min-width: 1024px) {
+  .menu-row__inner {
+    grid-template-columns: 5.5rem minmax(0, 21rem) 1fr;
+    gap: var(--space-4);
+    align-items: baseline;
+  }
+
+  .menu-row__desc {
+    grid-column: 3;
+    justify-self: end;
+    max-width: 44ch;
+  }
+}
+
+/* Compact menu rows on Начало — link rows */
+.menu-link {
+  display: grid;
+  grid-template-columns: 3.25rem 1fr auto;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 44px;
+  padding: var(--space-4) 0;
+  text-decoration: none;
+  color: var(--ink);
+  transition: color var(--dur) var(--ease);
+}
+
+.menu-link .menu-row__name { transition: color var(--dur) var(--ease); }
+
+.menu-link:hover .menu-row__name { color: var(--bronze-text); }
+
+.menu-link__arrow {
+  color: var(--bronze-line);
+  width: 1.35rem;
+  height: 1.35rem;
+  transition: color var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+
+.menu-link:hover .menu-link__arrow {
+  color: var(--ink);
+  transform: translateX(4px);
+}
+
+.section-foot { margin-top: clamp(2.5rem, 5vw, 4rem); }
+
+@media (max-width: 479.98px) {
+  .menu-row__note {
+    display: block;
+    margin: var(--space-2) 0 0;
+    vertical-align: baseline;
+    width: max-content;
+  }
+}
+
+/* ==========================================================================
+   Процес — три номерирани редакционни абзаца
+   ========================================================================== */
+
+.steps__list {
+  list-style: none;
+  display: grid;
+  gap: var(--space-6);
+}
+
+.step {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  gap: var(--space-4);
+  align-items: start;
+  max-width: 40rem;
+}
+
+.step__num {
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 5vw, 3.4rem);
+  font-weight: 500;
+  font-style: italic;
+  color: var(--bronze-text);
+  line-height: 1;
+  border-top: var(--hairline) solid var(--bronze-line);
+  padding-top: var(--space-3);
+}
+
+.step__title { margin-bottom: var(--space-2); }
+
+.step p { max-width: 44ch; }
+
+@media (min-width: 1024px) {
+  .steps__list {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-5);
+  }
+
+  .step {
+    display: block;
+    max-width: none;
+  }
+
+  .step__num {
+    display: block;
+    width: 100%;
+    margin-bottom: var(--space-4);
+  }
+
+  .step:nth-child(2) { margin-top: var(--space-6); }   /* editorial stagger */
+  .step:nth-child(3) { margin-top: calc(var(--space-6) * 2); }
+}
+
+/* ==========================================================================
+   Отзиви — курсивни цитати с висяща „
+   ========================================================================== */
+
+.reviews__grid {
+  display: grid;
+  gap: var(--space-6);
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.quote {
+  position: relative;
+  margin: 0;
+  padding-left: 2.9rem;
+  max-width: 56ch;
+}
+
+.quote::before {
+  content: "„";
+  position: absolute;
+  left: 0;
+  top: -0.42em;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 600;
+  font-size: clamp(3.6rem, 7vw, 5.2rem);
+  line-height: 1;
+  color: var(--bronze-line);
+}
+
+.quote blockquote { margin: 0 0 var(--space-4); }
+
+.quote__text {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: var(--font-size-quote);
+  line-height: 1.45;
+  color: var(--ink);
+  margin: 0;
+}
+
+.quote__attr {
+  font-size: var(--font-size-label);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--bronze-text);
+}
+
+.quote--feature .quote__text {
+  font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+  line-height: 1.4;
+}
+
+.reviews__source {
+  max-width: var(--measure);
+  padding-top: var(--space-4);
+  border-top: var(--hairline) solid var(--line);
+  font-size: 0.9375rem;
+}
+
+@media (min-width: 1024px) {
+  .reviews__grid {
+    grid-template-columns: 7fr 5fr;
+    column-gap: clamp(3rem, 6vw, 5.5rem);
+    align-items: start;
+  }
+
+  .quote--feature { grid-row: span 2; }
+  .quote--offset { margin-top: var(--space-6); }
+}
+
+/* ==========================================================================
+   Консултационен панел — „Цените се определят след преглед"
+   ========================================================================== */
+
+.consult__panel {
+  background: var(--porcelain);
+  padding: clamp(2.25rem, 5vw, 4rem);
+  display: grid;
+  gap: var(--space-5);
+}
+
+.consult__title { max-width: 18ch; }
+
+.consult__text p:last-child { max-width: 52ch; }
+
+@media (min-width: 1024px) {
+  .consult__panel {
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: var(--space-6);
+  }
+}
+
+/* ==========================================================================
+   FAQ — изискан списък от <details>
+   ========================================================================== */
+
+.faq-list { border-top: var(--hairline) solid var(--line); }
+
+.faq {
+  border-bottom: var(--hairline) solid var(--line);
+}
+
+.faq__q {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+  min-height: 44px;
+  padding: var(--space-4) 0;
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.3;
+  transition: color var(--dur) var(--ease);
+}
+
+.faq__q::-webkit-details-marker { display: none; }
+.faq__q::marker { content: ""; }
+
+.faq__q::after {
+  content: "+";
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.6rem;
+  line-height: 1;
+  color: var(--bronze-text);
+  flex: none;
+}
+
+.faq[open] .faq__q::after { content: "−"; }
+
+.faq__q:hover { color: var(--bronze-text); }
+
+.faq__a {
+  padding: 0 0 var(--space-5);
+  max-width: var(--measure);
+}
+
+/* ==========================================================================
+   Инфо редове (Контакти · Прием) — small caps definition rows
+   ========================================================================== */
+
+.info {
+  margin: 0;
+  border-top: var(--hairline) solid var(--line);
+}
+
+.info__row {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-4) 0;
+  border-bottom: var(--hairline) solid var(--line);
+}
+
+.info__row dt {
+  font-size: var(--font-size-label);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--bronze-text);
+}
+
+.info__row dd {
+  margin: 0;
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.info__row dd .text-link { font-size: inherit; }
+
+@media (min-width: 720px) {
+  .info__row {
+    grid-template-columns: 11rem 1fr;
+    align-items: baseline;
+    gap: var(--space-4);
+  }
+}
+
+/* ==========================================================================
+   За доктора
+   ========================================================================== */
+
+.page-hero {
+  padding-block: var(--space-section) 0;
+  margin-bottom: var(--space-section);
+}
+
+.page-hero h1 { max-width: 18ch; }
+
+.page-hero__grid { display: grid; gap: var(--space-6); }
+
+@media (min-width: 1024px) {
+  .page-hero__grid {
+    grid-template-columns: 7fr 4fr;
+    gap: clamp(3rem, 6vw, 5.5rem);
+    align-items: start;
+  }
+
+  .page-hero__aside { margin-top: var(--space-5); }
+}
+
+.pull-line {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(1.5rem, 3.2vw, 2.35rem);
+  line-height: 1.35;
+  color: var(--ink);
+  max-width: 24ch;
+  margin: var(--space-5) 0 var(--space-4);
+}
+
+.cred-list {
+  list-style: none;
+  border-top: var(--hairline) solid var(--line);
+  counter-reset: cred;
+}
+
+.cred {
+  display: grid;
+  grid-template-columns: 3.25rem 1fr;
+  gap: var(--space-3);
+  align-items: baseline;
+  padding: var(--space-4) 0;
+  border-bottom: var(--hairline) solid var(--line);
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.cred__numeral {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.3rem;
+  color: var(--bronze-text);
+}
+
+.cred--feature {
+  background: var(--porcelain);
+  border-bottom-color: var(--bronze-line);
+  border-top: var(--hairline) solid var(--bronze-line);
+  padding-inline: var(--space-3);
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.credentials__grid { display: grid; gap: var(--space-6); }
+
+@media (min-width: 1024px) {
+  .credentials__grid {
+    grid-template-columns: 5fr 7fr;
+    gap: clamp(3rem, 6vw, 5.5rem);
+  }
+
+  .cred-list { margin-top: var(--space-5); }  /* offset — asymmetric */
+}
+
+.practice__grid {
+  display: grid;
+  gap: var(--space-6);
+  margin-bottom: var(--space-6);
+}
+
+@media (min-width: 1024px) {
+  .practice__grid {
+    grid-template-columns: 5fr 6fr;
+    gap: clamp(3rem, 6vw, 5.5rem);
+    align-items: center;
+  }
+}
+
+/* ==========================================================================
+   Контакти
+   ========================================================================== */
+
+.contact-info__grid {
+  display: grid;
+  gap: var(--space-6);
+}
+
+@media (min-width: 1024px) {
+  .contact-info__grid {
+    grid-template-columns: 6fr 5fr;
+    gap: clamp(3rem, 6vw, 5.5rem);
+    align-items: start;
+  }
+}
+
+.map-frame {
+  min-height: 17rem;
+}
+
+.map-frame .u-eyebrow { margin-bottom: var(--space-2); }
+
+.map-frame__addr {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: var(--ink);
+  margin: 0;
+}
+
+/* ==========================================================================
+   Форма за запазване — подчертани полета
+   ========================================================================== */
+
+.book__grid { display: grid; gap: var(--space-6); }
+
+@media (min-width: 1024px) {
+  .book__grid {
+    grid-template-columns: 5fr 7fr;
+    gap: clamp(3rem, 6vw, 5.5rem);
+    align-items: start;
+  }
+}
+
+.benefits {
+  list-style: none;
+  margin-top: var(--space-5);
+  border-top: var(--hairline) solid var(--line);
+}
+
+.benefits li {
+  display: flex;
+  gap: 0.9em;
+  align-items: baseline;
+  padding: var(--space-3) 0;
+  border-bottom: var(--hairline) solid var(--line);
+  color: var(--ink);
+  font-size: 0.9375rem;
+}
+
+.benefits li::before {
+  content: "—";
+  color: var(--bronze-text);
+  flex: none;
+}
+
+.book__panel {
+  background: var(--porcelain);
+  padding: clamp(1.75rem, 4vw, 3rem);
+}
+
+.form__grid {
+  display: grid;
+  gap: var(--space-5);
+}
+
+@media (min-width: 720px) {
+  .form__grid { grid-template-columns: 1fr 1fr; }
+  .field--full { grid-column: 1 / -1; }
+}
+
+.field__label {
+  display: block;
+  font-size: var(--font-size-label);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--bronze-text);
+  margin-bottom: var(--space-2);
+}
+
+.field__input {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  padding: 0.55rem 0;
+  border: 0;
+  border-bottom: var(--hairline) solid var(--bronze-text);
+  border-radius: var(--radius-none);
+  box-shadow: var(--shadow-none);
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.5;
+  transition: border-color var(--dur) var(--ease);
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.field__input:focus-visible {
+  outline: none;
+  border-bottom: 2px solid var(--ink);
+  margin-bottom: -1px;   /* keep layout stable when border thickens */
+}
+
+.field__input::placeholder {
+  color: var(--text);
+  opacity: 0.68;
+}
+
+textarea.field__input {
+  resize: vertical;
+  min-height: 6.5rem;
+}
+
+.field--select { position: relative; }
+
+.field--select .field__input {
+  padding-right: 2rem;
+  cursor: pointer;
+}
+
+.field--select .field__chevron {
+  position: absolute;
+  right: 0.25rem;
+  bottom: 1rem;
+  width: 1.1rem;
+  height: 1.1rem;
+  color: var(--bronze-text);
+  pointer-events: none;
+}
+
+.form__consent {
+  display: grid;
+  gap: var(--space-3);
+  margin: var(--space-5) 0;
+  padding-top: var(--space-4);
+  border-top: var(--hairline) solid var(--line);
+}
+
+.checkbox {
+  display: flex;
+  gap: 0.9em;
+  align-items: flex-start;
+  min-height: 44px;
+  font-size: 0.875rem;
+  line-height: 1.7;
+  cursor: pointer;
+}
+
+.checkbox input {
+  appearance: none;
+  -webkit-appearance: none;
+  flex: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin: 0.25em 0 0;
+  border: var(--hairline) solid var(--ink);
+  border-radius: var(--radius-none);
+  background: var(--porcelain);
+  display: grid;
+  place-content: center;
+  cursor: pointer;
+}
+
+.checkbox input::before {
+  content: "";
+  width: 0.6rem;
+  height: 0.6rem;
+  background: var(--ink);
+  transform: scale(0);
+  transition: transform var(--dur) var(--ease);
+}
+
+.checkbox input:checked::before { transform: scale(1); }
+
+.form__submit { width: 100%; }
+
+@media (min-width: 720px) {
+  .form__submit { width: auto; min-width: 16rem; }
+}
+
+.form__note {
+  margin-top: var(--space-4);
+  font-size: 0.8125rem;
+  letter-spacing: 0.02em;
+}
+
+.form-success {
+  border: var(--hairline) solid var(--bronze-line);
+  outline: var(--hairline) solid var(--bronze-line);
+  outline-offset: var(--frame-offset);
+  margin: calc(var(--frame-offset) + 2px);
+  padding: var(--space-5);
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.5;
+}
+
+.form-success:focus-visible { outline-color: var(--ink); }
+
+/* ==========================================================================
+   CTA лента — над колонтитула на всяка страница
+   ========================================================================== */
+
+.cta-band {
+  border-top: var(--hairline) solid var(--bronze-line);
+  border-bottom: var(--hairline) solid var(--bronze-line);
+  background: var(--porcelain);
+  padding-block: clamp(3.5rem, 7vw, 6rem);
+}
+
+.cta-band__inner {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.cta-band__title {
+  max-width: 16ch;
+  margin-bottom: var(--space-3);
+}
+
+.cta-band__urgent { max-width: 46ch; }
+
+.cta-band__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+.cta-band__hours { letter-spacing: 0.18em; }
+
+@media (min-width: 1024px) {
+  .cta-band__inner {
+    grid-template-columns: 7fr 5fr;
+    gap: clamp(3rem, 6vw, 5.5rem);
+    align-items: center;
+  }
+
+  .cta-band__actions {
+    justify-self: end;
+    align-items: flex-end;
+    text-align: right;
+  }
+}
+
+/* ==========================================================================
+   Footer — тесен центриран колофон
+   ========================================================================== */
+
+.site-footer {
+  padding: clamp(3.5rem, 7vw, 6rem) var(--space-gutter) var(--space-6);
+  text-align: center;
+}
+
+.site-footer__inner {
+  max-width: 44rem;
+  display: grid;
+  gap: var(--space-4);
+  justify-items: center;
+}
+
+.site-footer__brand {
+  font-family: var(--font-display);
+  font-size: 1.55rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0;
+}
+
+.site-footer__rule {
+  width: 3.5rem;
+  height: var(--hairline);
+  background: var(--bronze-line);
+  border: 0;
+  margin: 0;
+}
+
+.site-footer__nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2) var(--space-5);
+}
+
+.site-footer__nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--ink);
+  text-decoration: none;
+  font-size: var(--font-size-label);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  background: linear-gradient(var(--bronze-text), var(--bronze-text)) no-repeat left calc(100% - 0.8em) / 0 var(--hairline);
+  transition: background-size var(--dur-slow) var(--ease);
+}
+
+.site-footer__nav a:hover { background-size: 100% var(--hairline); }
+
+.site-footer__contact {
+  color: var(--ink);
+  font-size: 0.9375rem;
+  margin: 0;
+}
+
+.site-footer__copy {
+  font-size: 0.8125rem;
+  margin: 0;
+}
+
+.site-footer__note {
+  font-size: 0.8125rem;
+  max-width: 44ch;
+  margin: 0;
+}
+
+.site-footer__back { margin-top: var(--space-3); }
+
+/* ==========================================================================
+   Фиксирана мобилна лента с действия (≤720px)
+   ========================================================================== */
+
+.mobile-bar { display: none; }
+
+@media (max-width: 720px) {
+  body { padding-bottom: calc(3.75rem + env(safe-area-inset-bottom, 0px)); }
+
+  .mobile-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 60;
+    background: var(--porcelain);
+    border-top: var(--hairline) solid var(--bronze-line);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  .mobile-bar__link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6em;
+    min-height: 3.75rem;
+    text-decoration: none;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .mobile-bar__link--call { color: var(--ink); }
+  .mobile-bar__link--call .icon { color: var(--bronze-text); }
+
+  .mobile-bar__link--book {
+    background: var(--ink);
+    color: var(--ivory);
+  }
+}
+
+/* ==========================================================================
+   Reduced motion — atelier stands perfectly still
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

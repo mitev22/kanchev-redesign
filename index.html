@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="bg">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Д-р Иван Кънчев — 6 дизайн направления · Фаза 1</title>
+<meta name="description" content="Сравнение на шест напълно различни дизайн направления за сайта на дентална практика д-р Иван Кънчев, Пловдив. Еднакво реално съдържание, различен дизайн.">
+<link rel="icon" href="data:,">
+<link rel="alternate" hreflang="bg" href="index.html">
+<link rel="alternate" hreflang="en" href="index.en.html">
+<link rel="alternate" hreflang="x-default" href="index.html">
+<style>
+/* Neutral gallery shell — deliberately plain so it doesn't bias the comparison. */
+:root{
+  --bg:#F5F5F4; --card:#FFFFFF; --ink:#1A1A18; --text:#52524E; --line:#E3E3DF;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --serif:Georgia,"Times New Roman",serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 var(--sans)}
+.wrap{max-width:1160px;margin:0 auto;padding:0 20px}
+a{color:inherit}
+a:focus-visible,button:focus-visible{outline:2px solid #1A1A18;outline-offset:3px;border-radius:2px}
+
+.langbar{display:flex;justify-content:flex-end;padding:16px 0 0}
+.lang-switch{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;font:600 12.5px/1 var(--sans);background:var(--card)}
+.lang-switch a,.lang-switch span{padding:8px 13px;text-decoration:none;color:var(--text)}
+.lang-switch [aria-current="true"]{background:var(--ink);color:#fff}
+.lang-switch a:hover{background:var(--bg)}
+header.site{padding:20px 0 8px}
+.kicker{font:600 12px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--text)}
+h1{font:700 clamp(1.7rem,4vw,2.5rem)/1.2 var(--sans);margin:12px 0 10px;letter-spacing:-.01em}
+.intro{max-width:74ch;color:var(--text);margin:0 0 20px}
+.notes{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px 22px;margin:8px 0 14px;font-size:14.5px;color:var(--text)}
+.notes ul{margin:6px 0 0;padding-left:18px}
+.notes li{margin:4px 0}
+.notes strong{color:var(--ink)}
+.phase2{font-size:14.5px;color:var(--text);max-width:80ch;margin:0 0 34px}
+.phase2 code{font:500 13px var(--mono);background:var(--card);border:1px solid var(--line);border-radius:5px;padding:2px 7px;color:var(--ink)}
+
+.grid{display:grid;grid-template-columns:1fr;gap:26px;padding-bottom:24px}
+@media(min-width:720px){.grid{grid-template-columns:1fr 1fr}}
+@media(min-width:1080px){.grid{grid-template-columns:1fr 1fr 1fr}}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;transition:box-shadow .15s ease,transform .15s ease}
+.card:hover{box-shadow:0 12px 32px rgba(20,20,18,.10);transform:translateY(-2px)}
+.card-body{padding:18px 20px 20px;display:flex;flex-direction:column;gap:8px;flex:1}
+.card h2{font:700 19px/1.25 var(--sans);margin:0}
+.card h2 .bgname{font-weight:500;color:var(--text)}
+.mood{font:600 11px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--text)}
+.why{margin:0;font-size:14.5px;color:var(--text);flex:1}
+.meta{display:flex;align-items:center;gap:10px;font:500 12.5px var(--sans);color:var(--text);flex-wrap:wrap}
+.dots{display:inline-flex;gap:5px}
+.dot{width:13px;height:13px;border-radius:50%;border:1px solid rgba(0,0,0,.14)}
+.open{display:inline-block;margin-top:6px;font:600 14.5px var(--sans);color:var(--ink);text-decoration:none;border:1px solid var(--ink);border-radius:8px;padding:10px 16px;text-align:center}
+.open:hover{background:var(--ink);color:#fff}
+
+/* ---- mini previews (decorative approximations; real pages load their own web fonts) ---- */
+.prev{aspect-ratio:16/10;padding:16px 18px;display:flex;flex-direction:column;gap:9px;border-bottom:1px solid var(--line);position:relative;overflow:hidden}
+.chrome{display:flex;gap:5px;margin-bottom:2px}
+.chrome i{width:8px;height:8px;border-radius:50%;background:rgba(0,0,0,.14)}
+.p-eyebrow{font:600 9px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase}
+.p-h{font-weight:700;line-height:1.15;letter-spacing:-.01em}
+.p-sub{font-size:10px;line-height:1.45;opacity:.75;max-width:34ch}
+.p-cta{display:flex;gap:7px;align-items:center;margin-top:auto}
+.p-btn{font:700 10px/1 var(--sans);padding:8px 12px;border-radius:6px}
+.p-row{display:flex;gap:7px}
+
+/* 01 Protocol — white / azure / hairlines */
+.p1{background:#FFFFFF;color:#0F1C28}
+.p1 .p-eyebrow{color:#0E6BA8}
+.p1 .p-h{font:700 20px/1.15 var(--sans)}
+.p1 .p-btn{background:#0E6BA8;color:#fff;border-radius:3px}
+.p1 .p-btn.ghost{background:none;color:#0F1C28;border:1px solid #0F1C28}
+.p1 .p-row{border-top:1px solid #DCE5EC;padding-top:8px}
+.p1 .p-row span{font:600 9px/1.4 var(--sans);color:#40525E;border-left:1px solid #DCE5EC;padding-left:8px}
+.p1 .p-row span:first-child{border-left:0;padding-left:0}
+.p1 .p-row b{display:block;font:800 13px var(--sans);color:#0F1C28}
+
+/* 02 Porchlight — cream / clay / pills */
+.p2{background:#FFF7EE;color:#33241A}
+.p2 .p-eyebrow{color:#B04A24}
+.p2 .p-h{font:700 20px/1.2 var(--serif)}
+.p2 .p-h em{font-style:italic;text-decoration:underline wavy #B04A24 1.5px;text-underline-offset:4px}
+.p2 .p-btn{background:#B04A24;color:#fff;border-radius:999px}
+.p2 .p-btn.ghost{background:#fff;color:#B04A24;border:2px solid #B04A24;border-radius:999px}
+.p2 .p-row span{font:700 8.5px/1 var(--sans);background:#F6C877;color:#33241A;border-radius:999px;padding:5px 9px}
+.p2 .p-row span.sage{background:#DDE7DA;color:#3E5738}
+
+/* 03 Atelier — ivory / ink / bronze */
+.p3{background:#F7F4EC;color:#191610}
+.p3 .p-eyebrow{color:#75623A;letter-spacing:.24em}
+.p3 .p-h{font:600 21px/1.15 var(--serif)}
+.p3 .p-h em{font-style:italic}
+.p3 .p-btn{background:none;color:#191610;border:1px solid #191610;border-radius:0;letter-spacing:.14em;font-weight:600;font-size:8.5px;text-transform:uppercase}
+.p3 .p-row{flex-direction:column;gap:4px}
+.p3 .p-row span{font:500 9.5px/1.5 var(--serif);border-bottom:1px solid #CBB98F;padding-bottom:4px;display:flex;gap:8px}
+.p3 .p-row span i{font-style:normal;color:#75623A}
+
+/* 04 Milk Tooth — paper / cobalt / sun / stickers */
+.p4{background:#FFFDF4;color:#14131A}
+.p4 .p-h{font:900 19px/1.1 var(--sans);text-transform:uppercase;letter-spacing:-.01em}
+.p4 .p-h mark{background:#FF5D8F;color:#14131A;padding:0 4px;transform:skew(-4deg);display:inline-block}
+.p4 .sticker{position:absolute;top:14px;right:-6px;transform:rotate(6deg);font:800 8px/1 var(--sans);letter-spacing:.06em;background:#35C4B5;color:#14131A;border:2.5px solid #14131A;border-radius:999px;padding:6px 10px;box-shadow:3px 3px 0 #14131A}
+.p4 .p-btn{background:#FFC700;color:#14131A;border:2.5px solid #14131A;border-radius:10px;box-shadow:3px 3px 0 #14131A}
+.p4 .p-btn.ghost{background:#fff;box-shadow:3px 3px 0 #14131A}
+.p4 .p-row span{font:800 8px/1 var(--sans);background:#2038E8;color:#fff;border:2px solid #14131A;border-radius:6px;padding:5px 8px;transform:rotate(-1.2deg)}
+.p4 .p-row span:nth-child(2){background:#fff;color:#14131A;transform:rotate(1.2deg)}
+
+/* 05 Broadsheet — paper / ink / vermilion index */
+.p5{background:#FAFAF6;color:#161616;border-top:3px solid #161616}
+.p5 .p-eyebrow{color:#63635E;border-bottom:1px solid #DEDED6;padding-bottom:6px}
+.p5 .p-h{font:600 20px/1.15 var(--serif)}
+.p5 .p-sub{font-family:var(--serif)}
+.p5 .p-row{flex-direction:column;gap:4px;margin-top:auto}
+.p5 .p-row span{font:500 9.5px/1.5 var(--serif);border-top:1px solid #DEDED6;padding-top:4px;display:flex;gap:8px}
+.p5 .p-row span i{font-style:normal;color:#C0361B;font-family:var(--sans);font-weight:700}
+.p5 .p-cta{display:none}
+
+/* 06 Instrument — warm dark / amber / mono */
+.p6{background:#161310;color:#EFE8DC}
+.p6::after{content:"";position:absolute;right:-30px;top:-30px;width:120px;height:120px;border:1px solid rgba(217,164,65,.35);border-radius:50%;pointer-events:none}
+.p6 .p-eyebrow{font-family:var(--mono);color:#D9A441;letter-spacing:.14em}
+.p6 .p-h{font:700 19px/1.2 var(--sans)}
+.p6 .p-h em{font-style:normal;color:#D9A441}
+.p6 .p-sub{color:#AC9F8D;opacity:1}
+.p6 .p-btn{background:#D9A441;color:#161310;border-radius:7px}
+.p6 .p-btn.ghost{background:none;color:#EFE8DC;border:1px solid #352D24}
+.p6 .p-row span{font:500 8.5px/1 var(--mono);letter-spacing:.08em;color:#AC9F8D;border:1px solid #352D24;border-radius:5px;padding:5px 8px}
+
+footer.site{border-top:1px solid var(--line);margin-top:16px;padding:26px 0 48px;font-size:13.5px;color:var(--text)}
+footer.site .wrap{display:flex;flex-direction:column;gap:6px}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <nav class="langbar" aria-label="Език / Language">
+    <span class="lang-switch">
+      <span aria-current="true" lang="bg">БГ</span>
+      <a href="index.en.html" hreflang="en" lang="en" aria-label="Switch to English">EN</a>
+    </span>
+  </nav>
+</div>
+
+<header class="site">
+  <div class="wrap">
+    <p class="kicker">Фаза 1 · Проучване на дизайн · 2026-07-02</p>
+    <h1>Д-р Иван Кънчев — шест дизайн направления</h1>
+    <p class="intro">Шест напълно различни дизайн-езика за сайта на практиката, всеки като малък сайт от четири страници (Начало · Услуги · За доктора · Контакти). Съдържанието е <strong>еднакво и реално</strong> във всичките шест — услуги, отзиви (5.0 от 356, SuperDoc), квалификации, НЗОК, контакти — така че сравнявате чист дизайн, а не различни текстове.</p>
+    <div class="notes">
+      <strong>Преди да разглеждате:</strong>
+      <ul>
+        <li>Съдържанието е извлечено от текущия сайт (<code>clinics/kanchev-dental</code>). Реални снимки на кабинета са използвани там, където направлението предвижда фотография.</li>
+        <li><strong>Адресът бул. Мария Луиза 70 е временен</strong> (ремонт на постоянния кабинет) — маркиран е в кода с <code>PLACEHOLDER</code> коментари, както и слотът за снимка на д-р Кънчев и картата.</li>
+        <li>Формите са демонстрационни — не изпращат заявки. Фаза 2 ги свързва с Web3Forms както на живия сайт.</li>
+        <li>Текущият сайт е светъл teal glassmorphism, а в репото има и три стари тъмни чернови — тези шест направления нарочно не повтарят нито едно от тях.</li>
+      </ul>
+    </div>
+    <p class="phase2"><strong>Как се избира победител:</strong> отворете направление, разгледайте четирите му страници (и на телефон — свийте прозореца), върнете се тук и сравнете следващото. Когато изберете, отговорете в сесията с името на папката, напр. <code>port 02-warm-family into the real site</code> — избраната система се пренася в реалния стек и може да се разгърне по останалите сайтове.</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="grid">
+
+    <article class="card">
+      <div class="prev p1" aria-hidden="true">
+        <div class="chrome"><i></i><i></i><i></i></div>
+        <span class="p-eyebrow">01 — Дентална медицина</span>
+        <span class="p-h">Здрави зъби и спокойствие</span>
+        <span class="p-sub">Прецизност, ред и въздух. Хартиено-бял фон, лазурен акцент, тънки линии.</span>
+        <div class="p-cta"><span class="p-btn">Запазете час</span><span class="p-btn ghost">Обадете се</span></div>
+        <div class="p-row"><span><b>10+</b>години опит</span><span><b>5.0</b>рейтинг</span><span><b>НЗОК</b>каса</span></div>
+      </div>
+      <div class="card-body">
+        <h2>01 · Protocol <span class="bgname">— модерно-клинично</span></h2>
+        <p class="mood">Прецизно · подредено · спокойно</p>
+        <p class="why">Бяла прецизност, линии и числа — кабинетът, който работи точно. За заети професионалисти, които избират по сигнали за компетентност.</p>
+        <p class="meta">Manrope + Inter <span class="dots"><i class="dot" style="background:#FFFFFF"></i><i class="dot" style="background:#0E6BA8"></i><i class="dot" style="background:#0F1C28"></i><i class="dot" style="background:#F2F6FA"></i></span></p>
+        <a class="open" href="01-modern-clinical/index.html">Разгледай направлението →</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="prev p2" aria-hidden="true">
+        <div class="chrome"><i></i><i></i><i></i></div>
+        <span class="p-eyebrow">Дентална медицина · ново поколение</span>
+        <span class="p-h">Здрави зъби и <em>спокойствие</em></span>
+        <span class="p-sub">Топъл крем, меки форми, вълни и човешки тон — за цялото семейство.</span>
+        <div class="p-cta"><span class="p-btn">Запазете час</span><span class="p-btn ghost">Обадете се</span></div>
+        <div class="p-row"><span>Прием на деца</span><span class="sage">НЗОК</span><span class="sage">BG / EN</span></div>
+      </div>
+      <div class="card-body">
+        <h2>02 · Porchlight <span class="bgname">— топло-семейно</span></h2>
+        <p class="mood">Меко · човешко · слънчево</p>
+        <p class="why">Практиката за цялото семейство: серифна топлина, заоблени карти, „Нямах усещане, че съм на зъболекар" като централно доказателство.</p>
+        <p class="meta">Vollkorn + Nunito <span class="dots"><i class="dot" style="background:#FFF7EE"></i><i class="dot" style="background:#B04A24"></i><i class="dot" style="background:#5F7D58"></i><i class="dot" style="background:#F6C877"></i></span></p>
+        <a class="open" href="02-warm-family/index.html">Разгледай направлението →</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="prev p3" aria-hidden="true">
+        <div class="chrome"><i></i><i></i><i></i></div>
+        <span class="p-eyebrow">Дентална медицина</span>
+        <span class="p-h">Здрави зъби и <em>спокойствие</em>, с грижа от професионалист</span>
+        <div class="p-row">
+          <span><i>I.</i> Естетична стоматология</span>
+          <span><i>II.</i> Коронки и протетика</span>
+        </div>
+        <div class="p-cta"><span class="p-btn">Запазете час</span></div>
+      </div>
+      <div class="card-body">
+        <h2>03 · Atelier <span class="bgname">— тиха лукс естетика</span></h2>
+        <p class="mood">Издателско · слонова кост · бронз</p>
+        <p class="why">Тих лукс за естетична стоматология и протетика от висок клас — направлението, което монетизира специализацията от University of Siena.</p>
+        <p class="meta">Cormorant Garamond + Montserrat <span class="dots"><i class="dot" style="background:#F7F4EC"></i><i class="dot" style="background:#191610"></i><i class="dot" style="background:#CBB98F"></i></span></p>
+        <a class="open" href="03-luxury-cosmetic/index.html">Разгледай направлението →</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="prev p4" aria-hidden="true">
+        <div class="chrome"><i></i><i></i><i></i></div>
+        <span class="sticker">Прием на деца ★</span>
+        <span class="p-h">Здрави зъби и <mark>спокойствие</mark></span>
+        <span class="p-sub">Плакатна енергия: дебели контури, твърди сенки, стикери — без страх.</span>
+        <div class="p-cta"><span class="p-btn">Запазете час</span><span class="p-btn ghost">Обадете се</span></div>
+        <div class="p-row"><span>5.0 ★ 356 оценки</span><span>НЗОК</span></div>
+      </div>
+      <div class="card-body">
+        <h2>04 · Milk Tooth <span class="bgname">— смело-игриво („Млечен зъб")</span></h2>
+        <p class="mood">Плакатно · цветно · без страх</p>
+        <p class="why">Направлението, което предпазлива агенция никога не би предложила: шумно, радостно, анти-страх — за млади семейства и хора, които отлагат зъболекаря.</p>
+        <p class="meta">Unbounded + Rubik <span class="dots"><i class="dot" style="background:#FFFDF4"></i><i class="dot" style="background:#2038E8"></i><i class="dot" style="background:#FFC700"></i><i class="dot" style="background:#FF5D8F"></i></span></p>
+        <a class="open" href="04-bold-playful/index.html">Разгледай направлението →</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="prev p5" aria-hidden="true">
+        <div class="chrome"><i></i><i></i><i></i></div>
+        <span class="p-eyebrow">Д-р Иван Кънчев · Пловдив</span>
+        <span class="p-h">Здрави зъби и спокойствие, с грижа от професионалист</span>
+        <div class="p-row">
+          <span><i>01</i> Кореново лечение — под микроскоп</span>
+          <span><i>02</i> Профилактика и преглед</span>
+          <span><i>03</i> Естетична стоматология</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <h2>05 · Broadsheet <span class="bgname">— редакционен минимализъм</span></h2>
+        <p class="mood">Типографско · монохромно · честно</p>
+        <p class="why">Чиста типография като добър вестник — честност вместо брошура. Без нито една снимка: съдържанието носи целия авторитет.</p>
+        <p class="meta">Literata + Inter <span class="dots"><i class="dot" style="background:#FAFAF6"></i><i class="dot" style="background:#161616"></i><i class="dot" style="background:#C0361B"></i></span></p>
+        <a class="open" href="05-editorial-minimal/index.html">Разгледай направлението →</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="prev p6" aria-hidden="true">
+        <div class="chrome"><i></i><i></i><i></i></div>
+        <span class="p-eyebrow">● Приема нови пациенти</span>
+        <span class="p-h">Здрави зъби и <em>спокойствие</em></span>
+        <span class="p-sub">Топло-тъмно като прецизен оптичен инструмент — микроскопът като идентичност.</span>
+        <div class="p-cta"><span class="p-btn">Запазете час</span><span class="p-btn ghost">Обадете се</span></div>
+        <div class="p-row"><span>[ОПИТ] 10+ г.</span><span>[РЕЙТИНГ] 5.0/356</span></div>
+      </div>
+      <div class="card-body">
+        <h2>06 · Instrument <span class="bgname">— тъмна прецизност</span></h2>
+        <p class="mood">Тъмно · месинг · инструментално</p>
+        <p class="why">Тъмната опция — но топла (еспресо + месинг), нарочно противоположна на старите студени teal чернови. Изградена около реалния коз: лечение под микроскоп.</p>
+        <p class="meta">Golos Text + JetBrains Mono <span class="dots"><i class="dot" style="background:#161310"></i><i class="dot" style="background:#D9A441"></i><i class="dot" style="background:#EFE8DC"></i></span></p>
+        <a class="open" href="06-dark-instrument/index.html">Разгледай направлението →</a>
+      </div>
+    </article>
+
+  </div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span><strong>Фаза 2:</strong> отговорете с папката-победител (напр. <code>port 04-bold-playful into the real site</code>) — дизайн-системата ѝ (tokens + компоненти в styles.css) се пренася в реалния стек: шаблона на build.py и флагманското репо, с всички задължителни елементи (Web3Forms, GDPR съгласие, schema.org, OG карта).</span>
+    <span>Phase 1 exploration · всички файлове са статични — отваряте ги директно в браузър, без сървър и без build стъпка.</span>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,1347 @@
+/* ==========================================================================
+   05 — Broadsheet · редакционен минимализъм
+   Дентална практика д-р Иван Кънчев, Пловдив
+   Shared stylesheet for index / services / about / contact.
+   Raw hex values live ONLY in :root. Components use var() exclusively.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Tokens
+   -------------------------------------------------------------------------- */
+:root {
+  /* colors */
+  --color-paper: #FAFAF6;
+  --color-ink: #161616;
+  --color-gray: #63635E;
+  --color-accent: #C0361B; /* vermilion — links, numerals, CTAs ONLY */
+  --line: #DEDED6;
+
+  /* fonts */
+  --font-display: 'Literata', Georgia, 'Times New Roman', serif;
+  --font-body: 'Literata', Georgia, 'Times New Roman', serif;
+  --font-meta: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* fluid type scale */
+  --size-h1: clamp(2.3rem, 6vw, 4.2rem);
+  --size-h2: clamp(1.55rem, 3.4vw, 2.3rem);
+  --size-h3: clamp(1.15rem, 2vw, 1.35rem);
+  --size-body: clamp(1.0625rem, 1.02rem + 0.2vw, 1.125rem); /* 17–18px */
+  --size-standfirst: clamp(1.125rem, 1.6vw, 1.3rem);
+  --size-quote: clamp(1.2rem, 2vw, 1.45rem);
+  --size-small: 0.9375rem;
+  --size-fine: 0.8125rem;
+  --size-meta: 0.6875rem; /* 11px */
+
+  /* space */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+
+  /* geometry */
+  --radius-none: 0;
+  --measure: 65ch;
+  --wrap-max: 72rem;
+  --tap: 2.75rem; /* 44px minimum touch target */
+}
+
+/* --------------------------------------------------------------------------
+   2. Reset & base
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: var(--size-body);
+  line-height: 1.65;
+  border-top: 3px solid var(--color-ink); /* broadsheet top rule */
+  overflow-x: clip;
+  /* clearance for the fixed mobile action bar (removed ≥721px) */
+  padding-bottom: calc(3.5rem + env(safe-area-inset-bottom, 0px));
+}
+
+h1, h2, h3, p, ul, ol, dl, dd, figure, blockquote {
+  margin: 0;
+}
+
+ul[class], ol[class] {
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  transition: text-decoration-thickness 0.12s ease, opacity 0.15s ease;
+}
+
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+strong {
+  font-weight: 600;
+}
+
+address {
+  font-style: normal;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* --------------------------------------------------------------------------
+   3. Utilities
+   -------------------------------------------------------------------------- */
+.wrap {
+  max-width: var(--wrap-max);
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 5vw, 3rem);
+}
+
+.meta-label {
+  font-family: var(--font-meta);
+  font-size: var(--size-meta);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-gray);
+}
+
+.skip-link {
+  position: absolute;
+  left: -999rem;
+  top: auto;
+}
+
+.skip-link:focus-visible {
+  position: fixed;
+  left: var(--space-3);
+  top: var(--space-3);
+  z-index: 200;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  font-family: var(--font-meta);
+  font-size: var(--size-fine);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: var(--space-3) var(--space-5);
+}
+
+/* --------------------------------------------------------------------------
+   4. Buttons & strong links
+   -------------------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  padding: 0.9rem 1.75rem;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  border: 1px solid var(--color-ink);
+  border-radius: var(--radius-none);
+  font-family: var(--font-meta);
+  font-size: var(--size-fine);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.btn:hover {
+  opacity: 0.82;
+}
+
+.link-tel {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: var(--color-accent);
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap);
+}
+
+/* --------------------------------------------------------------------------
+   5. Masthead (signature move a)
+   -------------------------------------------------------------------------- */
+.masthead__meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-2) var(--space-4);
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-meta);
+  font-size: var(--size-meta);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.masthead__place {
+  display: none;
+  color: var(--color-gray);
+}
+
+.masthead__meta-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-5);
+  margin-left: auto;
+}
+
+.masthead__meta a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap);
+  text-decoration: none;
+}
+
+.masthead__meta a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.masthead__tel {
+  color: var(--color-ink);
+}
+
+.masthead__book {
+  color: var(--color-accent);
+}
+
+/* Language toggle — sits in the folio meta bar, reads as newspaper chrome */
+.lang-switch {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap);
+  border: 1px solid var(--line);
+  font-family: var(--font-meta);
+  font-size: var(--size-meta);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.lang-switch__opt {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.25rem;
+  padding-inline: var(--space-2);
+  align-self: stretch;
+  color: var(--color-ink);
+  text-decoration: none;
+}
+
+.lang-switch__opt + .lang-switch__opt {
+  border-left: 1px solid var(--line);
+}
+
+a.lang-switch__opt:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.lang-switch__opt--current {
+  background: var(--color-accent);
+  color: var(--color-paper);
+  cursor: default;
+}
+
+.masthead__brand {
+  text-align: center;
+  padding-block: clamp(1.25rem, 4vw, 2.25rem);
+}
+
+.masthead__wordmark {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 5vw, 2.75rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  color: var(--color-ink);
+  text-decoration: none;
+}
+
+.masthead__wordmark:hover {
+  text-decoration: none;
+  opacity: 0.85;
+}
+
+.masthead__nav {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.masthead__nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  column-gap: clamp(0.25rem, 2vw, 2rem);
+}
+
+.masthead__nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap);
+  padding-inline: var(--space-3);
+  font-family: var(--font-meta);
+  font-size: var(--size-meta);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  text-decoration: none;
+}
+
+.masthead__nav a:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.masthead__nav a[aria-current="page"] {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   6. Hero (signature move b — pure type)
+   -------------------------------------------------------------------------- */
+.hero {
+  padding-block: clamp(3.5rem, 9vw, 6.5rem);
+}
+
+.hero__eyebrow {
+  margin-bottom: var(--space-5);
+}
+
+.hero__title {
+  font-family: var(--font-display);
+  font-size: var(--size-h1);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  max-width: 22ch;
+  text-wrap: balance;
+}
+
+.hero__title em {
+  font-style: italic;
+  font-weight: 400;
+}
+
+.hero__standfirst {
+  margin-top: var(--space-5);
+  font-size: var(--size-standfirst);
+  line-height: 1.55;
+  color: var(--color-gray);
+  max-width: 56ch;
+}
+
+.hero__rating {
+  margin-top: var(--space-5);
+  font-family: var(--font-meta);
+  font-size: var(--size-fine);
+  letter-spacing: 0.08em;
+  color: var(--color-gray);
+}
+
+.hero__rating strong {
+  color: var(--color-ink);
+  font-weight: 500;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3) var(--space-6);
+  margin-top: var(--space-6);
+}
+
+/* --------------------------------------------------------------------------
+   7. Sections & headers
+   -------------------------------------------------------------------------- */
+.section {
+  border-top: 1px solid var(--line);
+  padding-block: clamp(3rem, 7vw, 5rem);
+}
+
+.section--flush {
+  border-top: 0;
+}
+
+.section__head {
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.section__kicker {
+  margin-bottom: var(--space-3);
+}
+
+.section__title {
+  font-family: var(--font-display);
+  font-size: var(--size-h2);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  max-width: 26ch;
+  text-wrap: balance;
+}
+
+.section__lead {
+  margin-top: var(--space-4);
+  color: var(--color-gray);
+  font-size: var(--size-standfirst);
+  line-height: 1.55;
+  max-width: 56ch;
+}
+
+.section__more {
+  margin-top: var(--space-5);
+}
+
+/* --------------------------------------------------------------------------
+   8. Stats strip
+   -------------------------------------------------------------------------- */
+.stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-top: 2px solid var(--color-ink);
+}
+
+.stats__item {
+  padding: var(--space-5) var(--space-4) var(--space-5) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.stats__item:nth-child(even) {
+  border-left: 1px solid var(--line);
+  padding-left: var(--space-5);
+}
+
+.stats__value {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.stats__label {
+  display: block;
+  margin-top: var(--space-2);
+  font-family: var(--font-meta);
+  font-size: var(--size-meta);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-gray);
+}
+
+/* --------------------------------------------------------------------------
+   9. Index rows (signature move c — table of contents)
+   -------------------------------------------------------------------------- */
+.index {
+  border-top: 2px solid var(--color-ink);
+}
+
+.index__row {
+  display: grid;
+  grid-template-columns: 2.75rem minmax(0, 1fr) 2rem;
+  grid-template-areas:
+    "num head arrow"
+    "num desc desc";
+  column-gap: var(--space-4);
+  row-gap: var(--space-2);
+  align-items: baseline;
+  padding-block: var(--space-5);
+  border-bottom: 1px solid var(--line);
+  color: var(--color-ink);
+  text-decoration: none;
+}
+
+a.index__row:hover .index__name {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+}
+
+.index__num {
+  grid-area: num;
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+  font-weight: 500;
+  color: var(--color-accent);
+}
+
+.index__head {
+  grid-area: head;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2) var(--space-3);
+}
+
+.index__name {
+  font-family: var(--font-display);
+  font-size: var(--size-h3);
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.index__note {
+  font-family: var(--font-meta);
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-gray);
+  border: 1px solid var(--line);
+  padding: 0.2rem 0.5rem;
+  white-space: nowrap;
+}
+
+.index__desc {
+  grid-area: desc;
+  color: var(--color-gray);
+  font-size: var(--size-small);
+  line-height: 1.6;
+  max-width: 58ch;
+}
+
+.index__arrow {
+  grid-area: arrow;
+  justify-self: end;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  line-height: 1;
+  color: var(--color-accent);
+}
+
+/* --------------------------------------------------------------------------
+   10. Steps (numbered paragraphs)
+   -------------------------------------------------------------------------- */
+.steps {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.step {
+  border-top: 1px solid var(--line);
+  padding-top: var(--space-5);
+}
+
+.step__num {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--color-accent);
+}
+
+.step__title {
+  margin-top: var(--space-3);
+  font-family: var(--font-display);
+  font-size: var(--size-h3);
+  font-weight: 600;
+}
+
+.step__text {
+  margin-top: var(--space-3);
+  color: var(--color-gray);
+  font-size: var(--size-small);
+  line-height: 1.65;
+  max-width: 44ch;
+}
+
+/* --------------------------------------------------------------------------
+   11. Pull-quotes (signature move e)
+   -------------------------------------------------------------------------- */
+.quotes {
+  display: grid;
+  gap: var(--space-7);
+}
+
+.quote {
+  border-top: 1px solid var(--line);
+  padding-top: var(--space-6);
+}
+
+.quote__text {
+  position: relative;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: var(--size-quote);
+  line-height: 1.45;
+  max-width: 44ch;
+  padding-top: 2.75rem;
+}
+
+.quote__text::before {
+  content: "\201E"; /* „ oversized hanging mark */
+  position: absolute;
+  top: -1.5rem;
+  left: -0.06em;
+  font-size: 4rem;
+  font-style: normal;
+  line-height: 1;
+  color: var(--color-gray);
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.quote__by {
+  display: block;
+  margin-top: var(--space-4);
+  font-family: var(--font-meta);
+  font-size: var(--size-meta);
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-gray);
+}
+
+.quotes__source {
+  margin-top: clamp(2rem, 4vw, 3rem);
+  border-top: 1px solid var(--line);
+  padding-top: var(--space-4);
+  color: var(--color-gray);
+  font-size: var(--size-small);
+  max-width: var(--measure);
+}
+
+/* --------------------------------------------------------------------------
+   12. Consult banner (rule-bounded)
+   -------------------------------------------------------------------------- */
+.consult {
+  border-top: 2px solid var(--color-ink);
+  border-bottom: 1px solid var(--line);
+  padding-block: clamp(2rem, 4vw, 3rem);
+}
+
+.consult__title {
+  font-family: var(--font-display);
+  font-size: var(--size-h3);
+  font-weight: 600;
+  max-width: 30ch;
+}
+
+.consult__text {
+  margin-top: var(--space-3);
+  color: var(--color-gray);
+  font-size: var(--size-small);
+  line-height: 1.65;
+  max-width: 58ch;
+}
+
+.consult__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap);
+  margin-top: var(--space-2);
+  font-weight: 500;
+}
+
+/* --------------------------------------------------------------------------
+   13. Facts — definition tables with hairlines (signature move f)
+   -------------------------------------------------------------------------- */
+.facts {
+  border-top: 2px solid var(--color-ink);
+}
+
+.facts__row {
+  display: grid;
+  gap: var(--space-1);
+  padding-block: var(--space-4);
+  border-bottom: 1px solid var(--line);
+}
+
+.facts__row dt {
+  font-family: var(--font-meta);
+  font-size: var(--size-meta);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-gray);
+}
+
+.facts__row dd {
+  line-height: 1.55;
+}
+
+/* --------------------------------------------------------------------------
+   14. Split layout (asymmetric: text column + narrow meta side-column)
+   -------------------------------------------------------------------------- */
+.split {
+  display: grid;
+  gap: clamp(2.5rem, 6vw, 4rem);
+  align-items: start;
+}
+
+.split__aside > * + * {
+  margin-top: var(--space-6);
+}
+
+.aside-block__title {
+  margin-bottom: var(--space-3);
+}
+
+.aside-block__text {
+  color: var(--color-gray);
+  font-size: var(--size-small);
+  line-height: 1.65;
+}
+
+.aside-block__text a {
+  font-weight: 500;
+}
+
+/* --------------------------------------------------------------------------
+   15. Prose / essay (About) — drop cap = signature move d
+   -------------------------------------------------------------------------- */
+.prose {
+  max-width: var(--measure);
+}
+
+.prose p + p {
+  margin-top: var(--space-5);
+}
+
+.prose__lead {
+  font-size: var(--size-standfirst);
+  line-height: 1.6;
+}
+
+.dropcap::first-letter {
+  float: left;
+  font-family: var(--font-display);
+  font-size: 3.4em;
+  font-weight: 500;
+  line-height: 0.78;
+  padding: 0.06em 0.14em 0 0;
+  color: var(--color-ink);
+}
+
+.creds {
+  counter-reset: cred;
+  border-top: 2px solid var(--color-ink);
+  max-width: var(--measure);
+}
+
+.creds li {
+  counter-increment: cred;
+  display: grid;
+  grid-template-columns: 2.75rem minmax(0, 1fr);
+  column-gap: var(--space-4);
+  align-items: baseline;
+  padding-block: var(--space-4);
+  border-bottom: 1px solid var(--line);
+}
+
+.creds li::before {
+  content: counter(cred, decimal-leading-zero);
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+  font-weight: 500;
+  color: var(--color-accent);
+}
+
+/* --------------------------------------------------------------------------
+   16. Note boxes (portrait slot, map placeholder) — thin-ruled, photo-free
+   -------------------------------------------------------------------------- */
+.note-box {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-none);
+  display: grid;
+  place-content: center;
+  gap: var(--space-2);
+  text-align: center;
+  padding: var(--space-6);
+  min-height: 16rem;
+}
+
+.note-box--portrait {
+  min-height: 20rem;
+}
+
+.note-box__caption {
+  display: block;
+  margin-top: var(--space-2);
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--color-gray);
+  font-size: var(--size-small);
+}
+
+/* --------------------------------------------------------------------------
+   17. FAQ — ruled <details> list
+   -------------------------------------------------------------------------- */
+.faq {
+  border-top: 2px solid var(--color-ink);
+  max-width: var(--measure);
+}
+
+.faq details {
+  border-bottom: 1px solid var(--line);
+}
+
+.faq summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-4);
+  padding-block: var(--space-4);
+  min-height: var(--tap);
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+  font-weight: 500;
+  line-height: 1.4;
+  cursor: pointer;
+  list-style: none;
+}
+
+.faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq summary::after {
+  content: "+";
+  flex: none;
+  font-family: var(--font-meta);
+  font-size: 1.125rem;
+  font-weight: 400;
+  color: var(--color-gray);
+}
+
+.faq details[open] summary::after {
+  content: "\2212"; /* − */
+}
+
+.faq details p {
+  padding-bottom: var(--space-5);
+  color: var(--color-gray);
+  font-size: var(--size-small);
+  line-height: 1.65;
+  max-width: 58ch;
+}
+
+/* --------------------------------------------------------------------------
+   18. Benefits mini-list (contact)
+   -------------------------------------------------------------------------- */
+.benefits {
+  border-top: 1px solid var(--line);
+  max-width: var(--measure);
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.benefits li {
+  display: grid;
+  grid-template-columns: 1.5rem minmax(0, 1fr);
+  column-gap: var(--space-3);
+  padding-block: var(--space-3);
+  border-bottom: 1px solid var(--line);
+  font-size: var(--size-small);
+}
+
+.benefits li::before {
+  content: "\2014"; /* — editorial dash bullet */
+  color: var(--color-gray);
+}
+
+/* --------------------------------------------------------------------------
+   19. Forms — underline inputs, custom controls
+   -------------------------------------------------------------------------- */
+.form {
+  max-width: var(--measure);
+}
+
+.form__grid {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.field {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.field__label {
+  font-family: var(--font-meta);
+  font-size: var(--size-meta);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-gray);
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  font: inherit;
+  font-size: 1.0625rem;
+  color: var(--color-ink);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--color-ink);
+  border-radius: var(--radius-none);
+  padding: 0.7rem 0;
+  min-height: var(--tap);
+  transition: opacity 0.15s ease;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: var(--color-gray);
+  opacity: 1;
+}
+
+.field input:focus-visible,
+.field select:focus-visible,
+.field textarea:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+.field textarea {
+  min-height: 7.5rem;
+  resize: vertical;
+  line-height: 1.55;
+}
+
+.field__control {
+  position: relative;
+}
+
+.field__control::after {
+  content: "\25BE"; /* ▾ */
+  position: absolute;
+  right: 0.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-gray);
+  pointer-events: none;
+  font-size: 0.875rem;
+}
+
+.field select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 1.75rem;
+  cursor: pointer;
+}
+
+.check {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: var(--space-3);
+  align-items: start;
+  padding-block: var(--space-2);
+  cursor: pointer;
+}
+
+.check input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 1.375rem;
+  height: 1.375rem;
+  margin: 0.15rem 0 0;
+  border: 1px solid var(--color-ink);
+  border-radius: var(--radius-none);
+  background: var(--color-paper);
+  display: grid;
+  place-content: center;
+  cursor: pointer;
+}
+
+.check input[type="checkbox"]::before {
+  content: "";
+  width: 0.75rem;
+  height: 0.75rem;
+  background: var(--color-ink);
+  opacity: 0;
+  transition: opacity 0.12s ease;
+}
+
+.check input[type="checkbox"]:checked::before {
+  opacity: 1;
+}
+
+.check span {
+  font-size: var(--size-small);
+  line-height: 1.55;
+}
+
+.form__checks {
+  margin-top: var(--space-6);
+  border-top: 1px solid var(--line);
+  padding-top: var(--space-4);
+  display: grid;
+  gap: var(--space-2);
+}
+
+.form__submit {
+  margin-top: var(--space-6);
+  width: 100%;
+}
+
+.form__note {
+  margin-top: var(--space-4);
+  color: var(--color-gray);
+  font-size: var(--size-fine);
+}
+
+.form-success {
+  border: 1px solid var(--color-ink);
+  padding: var(--space-6);
+  max-width: var(--measure);
+}
+
+.form-success__title {
+  font-family: var(--font-display);
+  font-size: var(--size-h3);
+  font-weight: 600;
+}
+
+.form-success p {
+  margin-top: var(--space-3);
+  color: var(--color-gray);
+}
+
+/* --------------------------------------------------------------------------
+   20. Notices (спешност) & CTA band
+   -------------------------------------------------------------------------- */
+.notice {
+  border-top: 1px solid var(--line);
+  padding-block: var(--space-5);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.0625rem;
+  color: var(--color-ink);
+  max-width: var(--measure);
+}
+
+.cta-band {
+  border-top: 3px solid var(--color-ink);
+  padding-block: clamp(3rem, 8vw, 5rem);
+}
+
+.cta-band__kicker {
+  margin-bottom: var(--space-3);
+}
+
+.cta-band__title {
+  font-family: var(--font-display);
+  font-size: var(--size-h2);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  max-width: 24ch;
+  text-wrap: balance;
+}
+
+.cta-band__text {
+  margin-top: var(--space-4);
+  color: var(--color-gray);
+  max-width: 52ch;
+}
+
+.cta-band__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3) var(--space-6);
+  margin-top: var(--space-6);
+}
+
+/* --------------------------------------------------------------------------
+   21. Footer / colophon
+   -------------------------------------------------------------------------- */
+.colophon {
+  border-top: 2px solid var(--color-ink);
+  padding-block: clamp(2.5rem, 5vw, 3.5rem) var(--space-6);
+  font-size: var(--size-small);
+}
+
+.colophon__grid {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.colophon__brand {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.0625rem;
+}
+
+.colophon__address {
+  margin-top: var(--space-2);
+  color: var(--color-gray);
+}
+
+.colophon__address a {
+  color: var(--color-ink);
+}
+
+.colophon__nav ul {
+  display: grid;
+  gap: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.colophon__nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap);
+  color: var(--color-ink);
+  text-decoration: none;
+  font-family: var(--font-meta);
+  font-size: var(--size-meta);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.colophon__nav a:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.colophon__back {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap);
+  font-weight: 500;
+}
+
+.colophon__legal {
+  margin-top: var(--space-6);
+  border-top: 1px solid var(--line);
+  padding-top: var(--space-4);
+  color: var(--color-gray);
+  font-size: var(--size-fine);
+}
+
+.colophon__legal p + p {
+  margin-top: var(--space-1);
+}
+
+/* --------------------------------------------------------------------------
+   22. Mobile action bar (≤720px)
+   -------------------------------------------------------------------------- */
+.action-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: var(--color-paper);
+  border-top: 1px solid var(--color-ink);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.action-bar a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3.5rem;
+  font-family: var(--font-meta);
+  font-size: var(--size-fine);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.action-bar__call {
+  color: var(--color-ink);
+  border-right: 1px solid var(--line);
+}
+
+.action-bar__book {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+/* --------------------------------------------------------------------------
+   23. Anchors
+   -------------------------------------------------------------------------- */
+#book,
+.index__entry {
+  scroll-margin-top: var(--space-6);
+}
+
+/* --------------------------------------------------------------------------
+   24. Breakpoints
+   -------------------------------------------------------------------------- */
+@media (min-width: 480px) {
+  .masthead__place {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+  }
+}
+
+@media (min-width: 720px) {
+  .stats {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .stats__item:nth-child(even) {
+    border-left: 0;
+    padding-left: 0;
+  }
+
+  .stats__item + .stats__item {
+    border-left: 1px solid var(--line);
+    padding-left: var(--space-5);
+  }
+
+  .steps {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6);
+  }
+
+  .facts__row {
+    grid-template-columns: 11rem minmax(0, 1fr);
+    gap: var(--space-4);
+    align-items: baseline;
+  }
+
+  /* narrow side-column variant stays stacked */
+  .facts--stack .facts__row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-1);
+  }
+
+  .form__grid {
+    grid-template-columns: 1fr 1fr;
+    column-gap: var(--space-6);
+  }
+
+  .field--full {
+    grid-column: 1 / -1;
+  }
+
+  .form__submit {
+    width: auto;
+  }
+
+  .colophon__grid {
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+@media (min-width: 721px) {
+  body {
+    padding-bottom: 0;
+  }
+
+  .action-bar {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .index__row {
+    grid-template-columns: 3.5rem 17rem minmax(0, 1fr) 2.5rem;
+    grid-template-areas: "num head desc arrow";
+    column-gap: var(--space-6);
+  }
+
+  .index__desc {
+    font-size: var(--size-small);
+  }
+
+  .quotes {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+
+  .quotes .quote {
+    padding-inline: var(--space-6);
+  }
+
+  .quotes .quote:first-child {
+    padding-left: 0;
+  }
+
+  .quotes .quote:last-child {
+    padding-right: 0;
+  }
+
+  .quotes .quote + .quote {
+    border-left: 1px solid var(--line);
+  }
+
+  .quote__text {
+    font-size: 1.25rem;
+  }
+
+  .split {
+    grid-template-columns: minmax(0, 1fr) 19rem;
+  }
+
+  .split--aside-first .split__aside {
+    order: -1;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   25. Reduced motion — neutralize everything
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
