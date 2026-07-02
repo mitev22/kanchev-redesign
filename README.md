@@ -1,6 +1,10 @@
 # Kanchev Dental — Redesign Explorations (Phase 1)
 
-Six genuinely distinct design directions for the site of **Дентална практика д-р Иван Кънчев (Пловдив)** — each a lean, self-contained 4-page site (Начало · Услуги · За доктора · Контакти) built as zero-build static HTML/CSS/JS. **Open `index.html` in any browser** (double-click — no server, no build step) to see the comparison gallery; every card links into a direction. All six reuse the *identical, real* content extracted from the current live site (`clinics/kanchev-dental/index.html`), so you are comparing pure design language, not different copy. The only external dependency per direction is its Google Fonts pairing (pages fall back to system fonts offline).
+**Live:** https://mitev22.github.io/kanchev-redesign/ — Bulgarian gallery · English: https://mitev22.github.io/kanchev-redesign/index.en.html (use the БГ/EN toggle in any header to switch). *Demonstration site; not yet officially affiliated with the practice.*
+
+Six genuinely distinct design directions for the site of **Дентална практика д-р Иван Кънчев (Пловдив)** — each a lean, self-contained 4-page site (Начало · Услуги · За доктора · Контакти) built as zero-build static HTML/CSS/JS, **fully bilingual (BG + EN)** with a language toggle on every page. **Open `index.html` in any browser** (double-click — no server, no build step) to see the comparison gallery, or use the live link above; every card links into a direction. All six reuse the *identical, real* content extracted from the current live site (`clinics/kanchev-dental/index.html`), so you are comparing pure design language, not different copy. The only external dependency per direction is its Google Fonts pairing (pages fall back to system fonts offline).
+
+Each Bulgarian page (`index.html`, `services.html`, …) has an English sibling (`index.en.html`, `services.en.html`, …) with the same design; the English content is a faithful translation of the same real source (reviews translated from the Bulgarian originals).
 
 ## The six directions
 
